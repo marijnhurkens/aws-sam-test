@@ -3,6 +3,7 @@ package main
 import (
 	"errors"
 	"log"
+	"os"
 
 	"github.com/aws/aws-lambda-go/events"
 	"github.com/aws/aws-lambda-go/lambda"
@@ -10,7 +11,7 @@ import (
 
 var (
 	// ErrUndefinedHTTPMethod is thrown when a name is not provided
-	ErrUndefinedHTTPMethod = errors.New("Method not allowed.")
+	ErrUndefinedHTTPMethod = errors.New("method not allowed")
 )
 
 // Handler is your Lambda function handler
@@ -24,14 +25,14 @@ func Handler(request events.APIGatewayProxyRequest) (events.APIGatewayProxyRespo
 	switch request.HTTPMethod {
 	case "GET":
 		return events.APIGatewayProxyResponse{
-			Body:            "Hello test 3, method: GET",
+			Body:            "Hello test 3, method: GET, TEST: " + os.Getenv("TEST") + ", GLOBAL: " + os.Getenv("GLOBAL"),
 			StatusCode:      200,
 			IsBase64Encoded: false,
 		}, nil
 
 	case "POST":
 		return events.APIGatewayProxyResponse{
-			Body:            "Hello test, method POST\nBody:\n\n" + request.Body,
+			Body:            "Hello test, method POST, " + os.Getenv("TEST") + ", GLOBAL: " + os.Getenv("GLOBAL") + "\nBody:\n\n" + request.Body,
 			StatusCode:      200,
 			IsBase64Encoded: false,
 		}, nil

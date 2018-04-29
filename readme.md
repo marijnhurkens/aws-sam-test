@@ -14,6 +14,11 @@ To test locally:
 2. `sam local start-api`
 3. Api is accessable on http://127.0.0.1:3000 (probably, check console)
 
+To use the env variables file: `sam local start-api --env env-vars.json` 
+
+Todo: how to define parameters when using sam local start-api?
+Doesn't work: sam local start-api --env-vars env-vars.json --parameter-values 'GlobalVarTest=hallo' (still gives globaldefault as defined  in template.yaml)
+
 The go executable is automatically reloaded after building. The local test api accepts having a request body on a GET request, when deployed this generates a 403 bad request.
 
 Findings:
@@ -29,3 +34,11 @@ Findings:
     - go get github.com/aws/aws-lambda-go/events
     - go get github.com/aws/aws-lambda-go/lambda
     - etc.
+9. To speed up the local api it is neccesary to set AWS Api keys (https://github.com/awslabs/aws-sam-local/pull/159, from docs: https://docs.aws.amazon.com/lambda/latest/dg/test-sam-local.html):   
+   As with the AWS CLI and SDKs, SAM Local looks for credentials in the following order:
+
+   - Environment variables (AWS_ACCESS_KEY_ID, AWS_SECRET_ACCESS_KEY)
+
+   - The AWS credentials file, located at ~/.aws/credentials on Linux, MacOS, or Unix, or at C:\Users\USERNAME \.aws\credentials on Windows)
+
+   - Instance profile credentials, if running on an Amazon EC2 instance with an assigned instance role

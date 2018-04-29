@@ -1,23 +1,24 @@
-AWSTemplateFormatVersion: 2010-09-09
-Transform:
-- AWS::Serverless-2016-10-31
-
-Resources:
-  TestApi:
-    Type: "AWS::Serverless"
-    Properties:
-      Name: "testApi"
-
-
 AWSTemplateFormatVersion: '2010-09-09'
 Transform: AWS::Serverless-2016-10-31
+
+Parameters:
+  GlobalVarTest:
+    Type: String
+    Default: globaldefault
+    Description: Hoe werkt dit met sam local start-api?
+
 Resources:
-  ProxyResource:
+  FunctieNaamHier:
     Type: AWS::Serverless::Function
     Properties:
       Handler: main
       CodeUri: ./dist
       Runtime: go1.x
+      Environment:
+        Variables:
+          TEST: default
+          GLOBAL: 
+            Ref: GlobalVarTest
       Events:
         BikesResource:
           Type: Api
