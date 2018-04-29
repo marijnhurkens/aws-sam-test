@@ -1,0 +1,11 @@
+{
+  "name": "sam-local-test",
+  "version": "1.0.0",
+  "main": "index.js",
+  "license": "MIT",
+  "scripts": {
+      "build": "GOOS=linux go build -o ./dist/main ./src/main.go",
+      "package": "aws cloudformation package --template-file ./template.yaml --output-template-file serverless-output.yaml --s3-bucket fido-test",
+      "deploy": "aws cloudformation deploy --template-file ./serverless-output.yaml --stack-name fido-test --capabilities CAPABILITY_IAM"
+  }
+}

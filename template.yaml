@@ -1,0 +1,33 @@
+AWSTemplateFormatVersion: 2010-09-09
+Transform:
+- AWS::Serverless-2016-10-31
+
+Resources:
+  TestApi:
+    Type: "AWS::Serverless"
+    Properties:
+      Name: "testApi"
+
+
+AWSTemplateFormatVersion: '2010-09-09'
+Transform: AWS::Serverless-2016-10-31
+Resources:
+  ProxyResource:
+    Type: AWS::Serverless::Function
+    Properties:
+      Handler: main
+      CodeUri: ./dist
+      Runtime: go1.x
+      Events:
+        BikesResource:
+          Type: Api
+          Properties:
+            Method: any
+            Path: '/'
+        BikesResourceSub:
+          Type: Api
+          Properties:
+            Method: any
+            Path: '/{proxy+}'
+        
+
